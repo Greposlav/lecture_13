@@ -42,11 +42,42 @@ def binary_search(seq, number):
     return
 
 
+def recursive_binary_search(seq, number, mini, maxi):
+    """
+
+    :param seq:
+    :param number:
+    :param mini:
+    :param maxi:
+    :return:
+    """
+    if mini <= maxi:
+        middle = (maxi + mini)//2
+        if seq[middle] == number:
+            return middle
+        elif number < seq[middle]:
+            return recursive_binary_search(seq, number, mini, middle - 1)
+        elif number > seq[middle]:
+            return recursive_binary_search(seq, number, middle + 1, maxi)
+    else:
+        return -1
+
+
 def main(file_name, number):
     sequence = read_data(file_name=file_name, key='ordered_numbers')
 
     # iterative binary search
     binary_search(sequence, number=number)
+
+    # recursive binary search
+    mini = 0
+    maxi = len(sequence)-1
+
+    search = recursive_binary_search(sequence, number, mini, maxi)
+    if search == - 1:
+        print("V dane sekvenci se hledane cislo nevyskytuje.")
+    else:
+        print(f"Hledane cislo je na pozici {search+1}")
 
 
 if __name__ == '__main__':
